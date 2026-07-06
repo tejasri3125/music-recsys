@@ -99,7 +99,7 @@ graph LR
 **Backend** — FastAPI · Pydantic · NumPy · Pandas · SQLite
 **External API** — iTunes Search (free, no auth)
 **Hosting** — Cloudflare Pages · Render
-**Dataset** — Kaggle Spotify Tracks Dataset
+**Dataset** — [Spotify Tracks Dataset](https://www.kaggle.com/datasets/maharshipandya/-spotify-tracks-dataset) (Kaggle)
 
 ---
 
@@ -151,7 +151,7 @@ Set `VITE_API_URL` in `frontend/.env.production` to your backend's URL **before*
 
 ## 📄 License
 
-Built as a portfolio project. Dataset credit: Kaggle Spotify Tracks Dataset contributors.
+Built as a portfolio project. Dataset: [Spotify Tracks Dataset](https://www.kaggle.com/datasets/maharshipandya/-spotify-tracks-dataset) on Kaggle, credit to maharshipandya.
 
 <div align="center">
 
