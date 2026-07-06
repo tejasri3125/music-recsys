@@ -1,0 +1,839 @@
+/* ==========================================================================
+   MUSIC RECSYS — DESIGN SYSTEM
+   Dark: Sunset Drive — deep plum/violet with warm coral glow
+   Light: Sunset Drive — soft peach/cream with warm coral accent
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;500;600;700&display=swap');
+
+:root {
+  --coral: #FF9466;
+  --coral-soft: #FFB199;
+  --coral-deep: #E8703D;
+  --violet: #7C5CFC;
+
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --font-display: 'Fredoka', sans-serif;
+  --font-body: 'Nunito', sans-serif;
+  --font-landing: 'Fredoka', sans-serif;
+
+  --transition-fast: 0.2s ease;
+  --transition-mid: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ==========================================================================
+   DARK THEME — "Sunset Drive" night
+   ========================================================================== */
+[data-theme="dark"] {
+  --bg-base: #1A0F1F;
+  --bg-gradient: radial-gradient(ellipse 120% 80% at 50% -10%, #3D1F3D 0%, #241329 45%, #150C1A 100%);
+  --text-primary: #FFF6F0;
+  --text-secondary: #E0B8C4;
+  --text-muted: #A88494;
+
+  --glass-bg: rgba(255, 200, 170, 0.10);
+  --glass-bg-hover: rgba(255, 200, 170, 0.16);
+  --glass-border: rgba(255, 200, 170, 0.22);
+  --glass-border-hover: rgba(255, 148, 102, 0.5);
+  --glass-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+  --glass-shadow-hover: 0 12px 48px rgba(255, 148, 102, 0.3);
+  --glass-blur: 24px;
+
+  --accent: var(--coral);
+  --accent-glow: rgba(255, 148, 102, 0.35);
+  --particle-1: #FF9466;
+  --particle-2: #FFB199;
+  --particle-3: #C99BFF;
+  --particle-4: #7C5CFC;
+  --orb-color: rgba(255, 255, 255, 0.14);
+  --sparkle-color: rgba(255, 255, 255, 0.8);
+}
+
+/* ==========================================================================
+   LIGHT THEME — "Sunset Drive" day
+   ========================================================================== */
+[data-theme="light"] {
+  --bg-base: #FFF8F3;
+  --bg-gradient: radial-gradient(ellipse 120% 80% at 50% -10%, #FFE3D6 0%, #FFF8F3 55%, #FFEDE3 100%);
+  --text-primary: #3D1F2E;
+  --text-secondary: #7A5568;
+  --text-muted: #A9899A;
+
+  --glass-bg: rgba(255, 255, 255, 0.62);
+  --glass-bg-hover: rgba(255, 255, 255, 0.8);
+  --glass-border: rgba(124, 60, 90, 0.14);
+  --glass-border-hover: rgba(255, 148, 102, 0.45);
+  --glass-shadow: 0 8px 30px rgba(124, 60, 90, 0.1);
+  --glass-shadow-hover: 0 10px 36px rgba(255, 148, 102, 0.22);
+  --glass-blur: 20px;
+
+  --accent: var(--coral-deep);
+  --accent-glow: rgba(232, 112, 61, 0.25);
+  --particle-1: #E8703D;
+  --particle-2: #F0997B;
+  --particle-3: #9966E8;
+  --particle-4: #7C5CFC;
+  --orb-color: rgba(61, 31, 46, 0.10);
+  --sparkle-color: rgba(61, 31, 46, 0.55);
+}
+
+/* ==========================================================================
+   BASE
+   ========================================================================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  min-height: 100%;
+}
+
+body {
+  background: var(--bg-gradient);
+  background-attachment: fixed;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  min-height: 100vh;
+  transition: background var(--transition-mid), color var(--transition-mid);
+  overflow-x: hidden;
+  cursor: none; /* custom cursor takes over */
+}
+
+h1, h2, h3, .display {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+}
+
+/* ==========================================================================
+   GLASSMORPHIC COMPONENTS
+   ========================================================================== */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  border-radius: var(--radius-md);
+  transition: background var(--transition-fast),
+              border-color var(--transition-fast),
+              box-shadow var(--transition-fast),
+              transform var(--transition-fast);
+}
+
+.glass:hover {
+  background: var(--glass-bg-hover);
+  border-color: var(--glass-border-hover);
+  box-shadow: var(--glass-shadow-hover);
+}
+
+.glass-btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.95rem;
+  border-radius: var(--radius-sm);
+  cursor: none;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.glass-btn:active {
+  transform: scale(0.97);
+}
+
+.glass-card {
+  padding: 1.25rem;
+  border-radius: var(--radius-lg);
+}
+
+/* Accent variant — for primary CTAs */
+.glass-btn--accent {
+  background: linear-gradient(135deg, rgba(232, 185, 78, 0.18), rgba(232, 185, 78, 0.08));
+  border-color: rgba(232, 185, 78, 0.35);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.glass-btn--accent:hover {
+  background: linear-gradient(135deg, rgba(232, 185, 78, 0.28), rgba(232, 185, 78, 0.14));
+  box-shadow: 0 8px 28px var(--accent-glow);
+}
+
+/* ==========================================================================
+   AMBIENT GLOW ORBS — visible in BOTH themes, gives glass something to blur.
+   Without this, .glass has nothing colorful behind it and looks like a
+   plain bordered box instead of frosted glass.
+   ========================================================================== */
+.glow-orb {
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: -1;
+  filter: blur(90px);
+  animation: floatOrb 18s ease-in-out infinite alternate;
+}
+
+[data-theme="dark"] .glow-orb--1 { top: 5%; left: 10%; width: 380px; height: 380px; background: var(--orb-color); }
+[data-theme="dark"] .glow-orb--2 { top: 40%; right: 5%; width: 320px; height: 320px; background: var(--orb-color); animation-delay: 4s; }
+[data-theme="dark"] .glow-orb--3 { bottom: 0%; left: 30%; width: 300px; height: 300px; background: var(--orb-color); animation-delay: 8s; }
+
+[data-theme="light"] .glow-orb--1 { top: 5%; left: 10%; width: 380px; height: 380px; background: var(--orb-color); }
+[data-theme="light"] .glow-orb--2 { top: 40%; right: 5%; width: 320px; height: 320px; background: var(--orb-color); animation-delay: 4s; }
+[data-theme="light"] .glow-orb--3 { bottom: 0%; left: 30%; width: 300px; height: 300px; background: var(--orb-color); animation-delay: 8s; }
+
+@keyframes floatOrb {
+  0%   { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(6%, 8%) scale(1.1); }
+  100% { transform: translate(-8%, 4%) scale(0.95); }
+}
+
+/* ==========================================================================
+   AMBIENT SPARKLES — small twinkling dots, visible in BOTH themes
+   (white in dark mode, dark in light mode, via --sparkle-color)
+   ========================================================================== */
+.sky-layer {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.aurora-band {
+  position: absolute;
+  top: -20%;
+  left: -20%;
+  width: 140%;
+  height: 60%;
+  background: radial-gradient(ellipse at center, var(--accent-glow) 0%, transparent 65%);
+  filter: blur(40px);
+  animation: driftAurora 22s ease-in-out infinite alternate;
+}
+
+@keyframes driftAurora {
+  0%   { transform: translate(-5%, -5%) scale(1); }
+  50%  { transform: translate(8%, 5%) scale(1.15); }
+  100% { transform: translate(-8%, 3%) scale(0.95); }
+}
+
+.star {
+  position: absolute;
+  background: var(--sparkle-color);
+  border-radius: 50%;
+  animation: twinkle var(--dur, 3s) ease-in-out infinite;
+  opacity: var(--op, 0.6);
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: var(--op, 0.6); transform: scale(1); }
+  50%      { opacity: 0.15; transform: scale(0.8); }
+}
+
+/* ==========================================================================
+   CUSTOM CURSOR
+   ========================================================================== */
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.cursor-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent-glow);
+  transition: opacity 0.2s ease;
+}
+
+.cursor-ring {
+  width: 32px;
+  height: 32px;
+  border: 1.5px solid var(--accent);
+  opacity: 0.5;
+  transition: width 0.2s ease, height 0.2s ease, opacity 0.2s ease, border-color 0.2s ease;
+}
+
+.cursor-ring.is-hovering {
+  width: 46px;
+  height: 46px;
+  opacity: 0.9;
+  background: var(--accent-glow);
+}
+
+/* Hide custom cursor on touch devices */
+@media (hover: none) and (pointer: coarse) {
+  .cursor-dot, .cursor-ring { display: none; }
+  body { cursor: auto; }
+}
+
+/* ==========================================================================
+   THEME TOGGLE
+   ========================================================================== */
+.theme-toggle {
+  width: 52px;
+  height: 28px;
+  border-radius: 20px;
+  position: relative;
+  padding: 3px;
+  cursor: none;
+}
+
+.theme-toggle__thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 10px var(--accent-glow);
+  transition: transform var(--transition-mid);
+}
+
+[data-theme="light"] .theme-toggle__thumb {
+  transform: translateX(0);
+}
+
+[data-theme="dark"] .theme-toggle__thumb {
+  transform: translateX(24px);
+}
+
+/* ==========================================================================
+   UTILITY
+   ========================================================================== */
+.text-secondary { color: var(--text-secondary); }
+.text-muted { color: var(--text-muted); }
+.accent-text { color: var(--accent); }
+
+/* ==========================================================================
+   LAYOUT — nav, hero, grids, song card, page shells
+   ========================================================================== */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2.5rem;
+  margin: 1rem 1.5rem 0;
+  position: sticky;
+  top: 1rem;
+  z-index: 100;
+  border-radius: var(--radius-lg);
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+}
+
+.navbar__links {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.navbar__link {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: color var(--transition-fast);
+}
+
+.navbar__link:hover,
+.navbar__link.active {
+  color: var(--accent);
+}
+
+.navbar__brand {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 2.5rem 5rem;
+}
+
+/* --- Landing hero --- */
+.hero {
+  min-height: 82vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 2.5rem;
+}
+
+.hero__eyebrow {
+  color: var(--accent);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  margin-bottom: 1rem;
+}
+
+.hero__title {
+  font-family: var(--font-landing);
+  font-weight: 500;
+  font-size: clamp(2.8rem, 6.5vw, 4.5rem);
+  line-height: 1.05;
+  margin-bottom: 1.25rem;
+}
+
+.hero__title em {
+  font-style: italic;
+  font-weight: 300;
+}
+
+.hero__subtitle {
+  font-size: 1.15rem;
+  color: var(--text-secondary);
+  margin-bottom: 2.5rem;
+  max-width: 520px;
+}
+
+/* --- Sections --- */
+.section-title {
+  font-size: 1.4rem;
+  margin: 2.5rem 0 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+/* --- Song grid + card --- */
+.song-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.25rem;
+}
+
+.song-card {
+  padding: 1rem;
+  cursor: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  text-decoration: none;
+  color: var(--text-primary);
+}
+
+.song-card__art {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: var(--radius-sm);
+  background: var(--art-gradient, linear-gradient(135deg, var(--coral), var(--coral-deep)));
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.song-card__play {
+  width: 46px;
+  height: 46px;
+  font-size: 1.1rem;
+  background: rgba(0, 0, 0, 0.45);
+  border-color: rgba(255, 255, 255, 0.35);
+  color: #fff;
+}
+
+.song-card__title {
+  font-weight: 600;
+  font-size: 0.98rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.song-card__meta {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.song-card__actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.icon-btn {
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 0.95rem;
+  cursor: none;
+  color: var(--text-secondary);
+}
+
+.icon-btn.is-active {
+  color: var(--accent);
+  border-color: var(--glass-border-hover);
+}
+
+/* --- Search bar --- */
+.search-bar {
+  width: 100%;
+  padding: 0.9rem 1.25rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  cursor: text;
+}
+
+.search-bar:focus {
+  outline: none;
+  border-color: var(--glass-border-hover);
+  box-shadow: var(--glass-shadow-hover);
+}
+
+/* --- Song detail page --- */
+.detail-header {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-end;
+}
+
+.detail-header__art {
+  width: 180px;
+  height: 180px;
+  border-radius: var(--radius-lg);
+  flex-shrink: 0;
+}
+
+.detail-header__title {
+  font-size: 2.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.reason-tag {
+  display: inline-block;
+  font-size: 0.8rem;
+  color: var(--accent);
+  background: rgba(232, 185, 78, 0.12);
+  border: 1px solid rgba(232, 185, 78, 0.25);
+  padding: 0.2rem 0.7rem;
+  border-radius: 999px;
+  margin-top: 0.4rem;
+}
+
+@media (max-width: 640px) {
+  .navbar { padding: 1rem 1.25rem; }
+  .page { padding: 1.5rem 1.25rem 4rem; }
+  .hero { padding: 0 1.25rem; }
+  .detail-header { flex-direction: column; align-items: flex-start; }
+}
+
+/* ==========================================================================
+   PARTICLE HERO — interactive dot-shape landing hero
+   ========================================================================== */
+.particle-hero {
+  position: relative;
+  min-height: calc(100vh - 2rem);
+  margin: 1rem 1.5rem;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--glass-bg);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  display: flex;
+  align-items: stretch;
+}
+
+.particle-hero__canvas-side {
+  position: relative;
+  flex: 1 1 50%;
+}
+
+.particle-hero__canvas-side canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.particle-hero__glow-orb {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(70px);
+  background: var(--orb-color);
+  animation: floatOrb 16s ease-in-out infinite alternate;
+}
+.particle-hero__glow-orb--1 { top: 8%; left: 6%; width: 200px; height: 200px; }
+.particle-hero__glow-orb--2 { top: 60%; left: 22%; width: 160px; height: 160px; animation-delay: 3s; }
+.particle-hero__glow-orb--3 { top: 12%; right: 10%; width: 240px; height: 240px; animation-delay: 6s; }
+.particle-hero__glow-orb--4 { bottom: 8%; right: 20%; width: 180px; height: 180px; animation-delay: 9s; }
+
+/* Extra large layers concentrated behind the note itself, to give it
+   more visual weight/size without changing the actual dot geometry. */
+.particle-hero__glow-orb--note-1 {
+  top: 20%;
+  right: 10%;
+  width: 480px;
+  height: 480px;
+  opacity: 0.7;
+  animation-delay: 2s;
+}
+.particle-hero__glow-orb--note-2 {
+  bottom: 10%;
+  right: 22%;
+  width: 380px;
+  height: 380px;
+  opacity: 0.6;
+  animation-delay: 7s;
+}
+
+.particle-hero__float-note--1 { top: 10%; left: 10%; font-size: 1.7rem; color: var(--sparkle-color); animation-delay: 0s; }
+.particle-hero__float-note--2 { top: 20%; left: 38%; font-size: 1.4rem; color: var(--violet); opacity: 0.5; animation-delay: 1s; }
+.particle-hero__float-note--3 { bottom: 15%; left: 16%; font-size: 1.5rem; color: var(--accent); opacity: 0.45; animation-delay: 2s; }
+.particle-hero__float-note--4 { top: 14%; right: 12%; font-size: 2rem; color: var(--accent); opacity: 0.5; animation-delay: 3s; }
+.particle-hero__float-note--5 { top: 45%; right: 6%; font-size: 1.5rem; color: var(--sparkle-color); animation-delay: 4s; }
+.particle-hero__float-note--6 { bottom: 12%; right: 28%; font-size: 1.6rem; color: var(--violet); opacity: 0.5; animation-delay: 5s; }
+.particle-hero__float-note--7 { top: 35%; left: 6%; font-size: 1.5rem; color: var(--sparkle-color); opacity: 0.4; animation-delay: 2.5s; }
+.particle-hero__float-note--8 { bottom: 25%; left: 32%; font-size: 1.3rem; color: var(--accent); opacity: 0.4; animation-delay: 4.5s; }
+.particle-hero__float-note--9 { top: 55%; right: 32%; font-size: 1.4rem; color: var(--sparkle-color); opacity: 0.4; animation-delay: 6s; }
+
+.particle-hero__float-note {
+  position: absolute;
+  font-family: var(--font-display);
+  font-weight: 500;
+  pointer-events: none;
+  animation: driftNote 7s ease-in-out infinite;
+  z-index: 5;
+}
+
+@keyframes driftNote {
+  0%, 100% { transform: translateY(0) rotate(-4deg); opacity: 0.6; }
+  50%      { transform: translateY(-14px) rotate(4deg); opacity: 1; }
+}
+
+.particle-hero__content {
+  position: relative;
+  z-index: 10;
+  flex: 1 1 50%;
+  padding: 2rem 2rem 2rem 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  text-align: left;
+}
+
+@media (max-width: 900px) {
+  .particle-hero {
+    flex-direction: column;
+    min-height: auto;
+  }
+  .particle-hero__canvas-side {
+    flex: none;
+    width: 100%;
+    height: 340px;
+  }
+  .particle-hero__content {
+    align-items: center;
+    text-align: center;
+    padding: 1.5rem 2rem 2.5rem;
+  }
+}
+
+.particle-hero__eyebrow {
+  color: var(--accent);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  margin-bottom: 0.75rem;
+}
+
+.particle-hero__title {
+  font-family: var(--font-landing);
+  font-weight: 600;
+  font-size: clamp(2.2rem, 5vw, 3.6rem);
+  line-height: 1.1;
+  margin-bottom: 1rem;
+  max-width: 640px;
+}
+
+.particle-hero__title em {
+  font-style: normal;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.particle-hero__subtitle {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  margin-bottom: 1.75rem;
+  max-width: 480px;
+}
+
+.particle-hero__actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+@media (max-width: 640px) {
+
+}
+
+/* ==========================================================================
+   HOME BANNER + SECTION HEADERS — real visual identity, not just color swap
+   ========================================================================== */
+.home-banner {
+  padding: 2rem 2.5rem;
+  border-radius: var(--radius-lg);
+  margin-bottom: 2rem;
+  background-image: linear-gradient(135deg, var(--accent-glow), transparent 60%);
+}
+
+.home-banner__eyebrow {
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 0.4rem;
+}
+
+.home-banner__title {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 2rem 0 1.25rem;
+}
+
+.section-header__badge {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+}
+
+.section-header .section-title {
+  margin: 0;
+}
+
+/* ==========================================================================
+   SEARCH PAGE REFRESH — segmented toggle + icon search bar
+   ========================================================================== */
+.search-toggle-group {
+  display: inline-flex;
+  padding: 0.3rem;
+  border-radius: var(--radius-md);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  gap: 0.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.search-toggle-group .glass-btn {
+  border: none;
+  background: transparent;
+  box-shadow: none;
+}
+
+.search-toggle-group .glass-btn.glass-btn--accent {
+  background: linear-gradient(135deg, rgba(255, 148, 102, 0.25), rgba(255, 148, 102, 0.12));
+  border: 1px solid var(--glass-border-hover);
+}
+
+.search-bar-wrapper {
+  position: relative;
+}
+
+.search-bar-wrapper .search-icon {
+  position: absolute;
+  left: 1.1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+.search-bar-wrapper .search-bar {
+  padding-left: 2.6rem;
+}
+
+/* ==========================================================================
+   SONG DETAIL REFRESH — accent wash behind header
+   ========================================================================== */
+.detail-header-wrap {
+  padding: 2rem;
+  border-radius: var(--radius-lg);
+  margin-bottom: 1rem;
+  background-image: radial-gradient(ellipse at top left, var(--accent-glow), transparent 60%);
+}
+
+/* ==========================================================================
+   SONG DETAIL — play overlay on the big header art
+   ========================================================================== */
+.detail-header__art {
+  cursor: none;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.detail-header__play-overlay {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  color: #fff;
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.detail-header__art:hover .detail-header__play-overlay,
+.detail-header__play-overlay.is-active {
+  opacity: 1;
+  transform: scale(1);
+}
